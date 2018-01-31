@@ -1,0 +1,42 @@
+spring:
+  datasource:
+    url: jdbc:mysql://192.168.201.28:3306/frontshopping
+    username: shopping_user
+    password: shopping_user
+    driver-class-name: com.mysql.jdbc.Driver
+    type: org.apache.commons.dbcp.BasicDataSource
+    dbcp2:
+      validation-query: SELECT NOW() FROM DUAL
+      test-on-borrow: true
+  http:
+    multipart:
+      max-file-size: 2000Mb
+      max-request-size: 2500Mb
+mybatis:
+  #mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.lxh.cloud.study.model
+management:
+  security:
+    enabled: false
+eureka:
+  client:
+    service-url:
+      defaultZone: http://user:password123@peer1:8761/eureka/,http://user:password123@peer2:8762/eureka/
+  instance:
+    prefer-ip-address: true
+    metadata-map:
+      lxh-metadata: liuxh的自定义元数据
+logging:
+  level:
+    root: INFO
+    org.springframework.web.servlet.DispatcherServlet: DEBUG
+---
+spring:
+  profiles: peer1                                 # 指定profile=peer1
+server:
+  port: 8081
+---
+spring:
+  profiles: peer2                                 # 指定profile=peer1
+server:
+  port: 8082
